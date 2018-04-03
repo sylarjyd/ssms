@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd" >
+	
+	<!-- 扫描该包下的注解 -->
+	<context:component-scan base-package="com.jyd.controller" />
+	
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+  <!-- 配置文件上传的流解析器 -->
+  <bean id="multipartResolver" 
+   		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		<!-- 设置文件上传过程中客户端发送数据的编码 -->
+   		<property name="defaultEncoding" value="UTF-8"></property>
+   		<!-- 设置文件上传的保存目录-->
+   		<property name="uploadTempDir" value="upload"></property>
+   		<!-- 设置上传的文件的最大尺寸 -->
+   		<property name="maxUploadSize" value="4194304"></property>  		
+   </bean>
+   
+  <!-- 视图解析器 -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+   		<property name="prefix" value="/"></property>
+   		<property name="suffix" value=".jsp"></property>
+   		
+   </bean>
+</beans>
