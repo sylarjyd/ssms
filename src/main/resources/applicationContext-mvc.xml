@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd 
+        http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        
+     <!-- 全局context类配置 -->    
+	<mvc:default-servlet-handler />
+	
+	 <!-- 激活自动代理功能 -->  
+    <aop:aspectj-autoproxy proxy-target-class="true" />  
+    
+	<!-- 扫描该包下的注解 -->
+	<context:component-scan base-package="com.jyd.controller" />
+	
+	<!-- 注解驱动开启扫描-->
+	<mvc:annotation-driven/>
+	
+	<!-- 静态资源文件位置-->
+	<mvc:resources mapping="/css/**" location="/css/"/>
+	<mvc:resources mapping="/html/**" location="/html/"/>
+	<mvc:resources mapping="/image/**" location="/image/"/>
+	<mvc:resources mapping="/js/**" location="/js/"/>
+	<mvc:resources mapping="/freemarker/**" location="/freemarker/"/>
+	   
+  <!-- 视图解析器 -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+   		<property name="order" value="1"></property>
+   		<property name="prefix" value="/WEB-INF/jsp/"></property>
+   		<property name="suffix" value=".jsp"></property>   		
+   </bean>
+   
+    <!--JSP视图解析器-->  
+    <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/jsp/"/>  
+        <property name="suffix" value=".jsp"/>  
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>  
+        <property name="order" value="1"/>  
+    </bean>
+    
+    <!-- 配置freeMarker视图解析器 -->  
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">  
+        <property name="contentType" value="text/html;charset=UTF-8"/>  
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>  
+        <property name="prefix" value="/WEB-INF/freemarker/"/>  
+        <property name="suffix" value=".ftl"/>  
+        <property name="cache" value="true"/>  
+        <property name="exposeSessionAttributes" value="true"/>  
+        <property name="exposeRequestAttributes" value="true"/>  
+        <property name="exposeSpringMacroHelpers" value="true"/>  
+        <!-- 在页面中使用${request.contextPath}就可获得contextPath -->  
+        <property name="requestContextAttribute" value="request"/>  
+        <property name="order" value="0"/>  
+    </bean>    
+    
+    <!-- 配置freeMarker的模板路径 -->  
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">  
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>  
+        <property name="freemarkerVariables">  
+            <map>  
+                <entry key="xml_escape" value-ref="fmXmlEscape" />  
+            </map>  
+        </property>  
+        <property name="defaultEncoding" value="UTF-8"/>  
+        <property name="freemarkerSettings" ref="freemarkerConfig"/>  
+    </bean>  
+    
+    <bean id="freemarkerConfig" class="org.springframework.beans.factory.config.PropertiesFactoryBean">  
+        <property name="location" value="classpath:freemarker.properties"/>  
+    </bean>  
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>  
+    
+  <!-- 配置文件上传的流解析器 -->
+  <bean id="multipartResolver" 
+   		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		<!-- 设置文件上传过程中客户端发送数据的编码 -->
+   		<property name="defaultEncoding" value="UTF-8"></property>
+   		<!-- 设置文件上传的保存目录-->
+   		<property name="uploadTempDir" value="upload"></property>
+   		<!-- 设置上传的文件的最大尺寸 -->
+   		<property name="maxUploadSize" value="4194304"></property>  		
+   </bean>
+   
+</beans>

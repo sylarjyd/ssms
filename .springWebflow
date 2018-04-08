@@ -3,21 +3,5 @@
 	<version>1</version>
 	<pluginVersion><![CDATA[3.9.2.201712210913-RELEASE]]></pluginVersion>
 	<configs>
-		<config>
-			<file>src/main/resources/applicationContext-dao.xml</file>
-			<name><![CDATA[applicationContext-dao]]></name>
-		</config>
-		<config>
-			<file>src/main/resources/applicationContext-shiro.xml</file>
-			<name><![CDATA[applicationContext-shiro]]></name>
-		</config>
-		<config>
-			<file>src/main/resources/mybatis-generator-config.xml</file>
-			<name><![CDATA[mybatis-generator-config]]></name>
-		</config>
-		<config>
-			<file>src/main/resources/spring-mvc.xml</file>
-			<name><![CDATA[spring-mvc]]></name>
-		</config>
 	</configs>
 </webflow-project-description>
